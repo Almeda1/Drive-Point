@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// IMPORT YOUR LOGO
-import wheelLogo from '../../assets/wheel logo.png';
+
+// ❌ OLD IMPORT REMOVED
+// import wheelLogo from '../../assets/wheel logo.png';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,10 +17,10 @@ export function Footer() {
             <div className="flex items-center gap-3">
               
               {/* --- LOGO UPDATE START --- */}
-              {/* Removed glowing box, added image with hover animation */}
               <div className="relative w-12 h-12 flex items-center justify-center">
                 <img 
-                  src={wheelLogo} 
+                  // ✅ UPDATED: Points directly to public folder
+                  src="/wheel-logo.png" 
                   alt="DrivePoint Logo" 
                   className="w-12 h-12 object-contain hover:scale-110 transition-transform duration-300"
                 />

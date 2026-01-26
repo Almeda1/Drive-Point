@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-// --- IMPORT YOUR LOGO HERE ---
- //import carLogo from '../../assets/car logo.png'; 
-import wheelLogo from '../../assets/wheel logo.png';
-//import thirdLogo from '../../assets/third logo.png';
+// --- NO IMPORTS NEEDED FOR PUBLIC IMAGES ---
 
 export function Navbar() {
   const location = useLocation();
@@ -43,15 +40,12 @@ export function Navbar() {
             onMouseEnter={() => setLogoHover(true)}
             onMouseLeave={() => setLogoHover(false)}
           >
-            {/* UPDATED LOGO CONTAINER: 
-                Removed the background gradients and box shadows.
-                Kept the sizing wrapper.
-            */}
+            {/* UPDATED LOGO CONTAINER */}
             <div className="relative w-12 h-12 flex items-center justify-center">
               <img 
-                src={wheelLogo} 
+                // UPDATED: Points directly to the public folder
+                src="/wheel-logo.png" 
                 alt="DrivePoint Logo" 
-                // Transferred animations (scale & rotate) directly to the image
                 className={`
                   w-12 h-12 object-contain drop-shadow-md 
                   transition-all duration-500 ease-out
