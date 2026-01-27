@@ -262,7 +262,7 @@ export function LandingPage() {
                     Book Now
                   </Link>
                   <button 
-                      onClick={() => window.location.href = 'tel:+1234567890'}
+                      onClick={() => window.location.href = 'tel:+2347015502629'}
                       className="px-10 py-4 rounded-xl border border-slate-700 text-white font-semibold hover:bg-slate-800 transition-colors"
                   >
                     Call Support

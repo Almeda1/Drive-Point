@@ -39,7 +39,7 @@ export function ContactUsPage() {
   
   const [formData, setFormData] = useState({
     fullName: '',
-    email: '', // Brought back
+    email: '', 
     phone: '',
     serviceType: '',
     message: ''
@@ -84,9 +84,23 @@ export function ContactUsPage() {
         `*Message:*\n${formData.message}`;
 
     const encodedMessage = encodeURIComponent(whatsappMessage);
+    const phoneNumber = "2347015502629";
     
+    // Using api.whatsapp.com/send is more reliable for programmatic clicks than wa.me
+    const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    
+    // **FIX**: Detect mobile. On mobile, use window.location.href to force the app switch.
+    // We execute this IMMEDIATELY (not in setTimeout) to bypass popup blockers.
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        window.location.href = url;
+    } else {
+        window.open(url, '_blank');
+    }
+
+    // Update UI state after a short delay for visual effect
     setTimeout(() => {
-        window.open(`https://wa.me/2347015502629?text=${encodedMessage}`, '_blank');
         setStatus('success');
         setErrorMessage('');
         setFormData({ fullName: '', email: '', phone: '', serviceType: '', message: '' });
@@ -106,10 +120,13 @@ export function ContactUsPage() {
                  `Email: ${formData.email}\n` +
                  `Phone: ${formData.phone || 'N/A'}\n\n` +
                  `Message:\n${formData.message}`;
+    
+    const mailtoLink = `mailto:tejirioscar5@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // **FIX**: Execute navigation immediately to ensure mobile browsers process it.
+    window.location.href = mailtoLink;
 
     setTimeout(() => {
-        // "mailto" opens the default mail client with fields pre-filled
-        window.location.href = `mailto:tejirioscar5@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         setStatus('success');
         setErrorMessage('');
         setFormData({ fullName: '', email: '', phone: '', serviceType: '', message: '' });
@@ -252,7 +269,7 @@ export function ContactUsPage() {
                       />
                     </div>
 
-                    {/* Email - BROUGHT BACK */}
+                    {/* Email */}
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Email Address</label>
                       <input 
@@ -331,7 +348,7 @@ export function ContactUsPage() {
                     
                     {/* BUTTON 1: WHATSAPP */}
                     <button 
-                      type="button" // Important: type="button" prevents standard submit
+                      type="button" 
                       onClick={handleWhatsApp}
                       disabled={status === 'loading'}
                       className="py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold text-lg shadow-lg shadow-green-600/20 hover:shadow-green-600/40 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
@@ -354,7 +371,7 @@ export function ContactUsPage() {
                       className="py-4 rounded-xl border border-indigo-500/30 bg-slate-800/50 hover:bg-indigo-600 hover:border-indigo-500 text-white font-bold text-lg shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/30 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
                     >
                       {status === 'loading' && lastAction === 'email' ? (
-                         <span className="animate-pulse">Loading...</span>
+                          <span className="animate-pulse">Loading...</span>
                       ) : (
                         <>
                           <span>Via Email</span>
